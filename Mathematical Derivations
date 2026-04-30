@@ -1,0 +1,19 @@
+# Mathematical Foundations of Polariton Interference Synapse
+
+## 1. Polariton Hybridization
+The coupling between Graphene plasmons and hBN phonon polaritons is modeled using the hybridized dispersion relation. The local dielectric function $\epsilon(\omega)$ is given by:
+
+$$\epsilon_{hBN}(\omega) = \epsilon_{\infty} \left( 1 + \frac{\omega_{LO}^2 - \omega_{TO}^2}{\omega_{TO}^2 - \omega^2 - i\omega\gamma} \right)$$
+
+where $\omega_{LO}$ and $\omega_{TO}$ are the longitudinal and transverse optical phonon frequencies of hBN.
+
+## 2. Wave Interference and Intensity Mapping
+The total electric field $E_{total}$ at the readout node results from the superposition of two gated sources:
+
+$$E_{total}(r) = A_1 e^{i(k \cdot r + \phi_1)} + A_2 e^{i(k \cdot r + \phi_2)}$$
+
+The synaptic weight is mapped through the intensity $I(r) \propto |E_{total}|^2$. To emulate biological nonlinear response, we apply a hyperbolic tangent activation:
+
+$$V_{out} = \tanh(\alpha \cdot I(r) \cdot E_f)$$
+
+where $E_f$ is the Fermi level of Graphene, acting as a synaptic weight scaling factor.
