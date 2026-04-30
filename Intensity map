@@ -1,0 +1,39 @@
+import numpy as np
+import matplotlib.pyplot as plt
+import pandas as pd
+import os
+
+# 저장 폴더 생성
+os.makedirs('./results/plots', exist_ok=True)
+
+def generate_and_save_results():
+    input_combinations = [(0,0), (0,1), (1,0), (1,1)]
+    data_log = []
+
+    for inp in input_combinations:
+        # 이전에 완성한 시뮬레이션 함수 호출 (가정)
+        # X, Y, intensity, v_out = simulate_final_synapse_fixed(inp)
+        
+        # 1. Intensity Map 시각화 저장
+        plt.figure(figsize=(6, 4))
+        plt.pcolormesh(X, Y, intensity, cmap='magma', shading='auto')
+        plt.title(f"Intensity Map - Input {inp}")
+        plt.colorbar(label='Field Intensity')
+        plt.savefig(f'./results/plots/intensity_map_{inp[0]}{inp[1]}.png')
+        plt.close()
+
+        # 2. 수치 데이터 로그 저장
+        data_log.append({
+            'Input_A': inp[0],
+            'Input_B': inp[1],
+            'V_out': v_out,
+            'State': 'EPSP' if v_out > 0.6 else 'IPSP'
+        })
+
+    # CSV 결과 저장
+    df = pd.DataFrame(data_log)
+    df.to_csv('./results/synaptic_weight_log.csv', index=False)
+    print("Results have been saved to /results folder.")
+
+if __name__ == "__main__":
+    generate_and_save_results()
