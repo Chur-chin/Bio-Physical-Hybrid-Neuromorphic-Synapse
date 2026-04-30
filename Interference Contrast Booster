@@ -1,0 +1,41 @@
+import numpy as np
+
+def simulate_portfolio_ready_synapse(input_pair=(0, 0)):
+    # 1. 환경 설정
+    ef_volts = 0.6
+    k0_n = 1.2  # Effective wave vector in Graphene-hBN
+    
+    # 2. 입력 위상
+    phi_a = 0 if input_pair[0] == 0 else np.pi
+    phi_b = 0 if input_pair[1] == 0 else np.pi
+    
+    # 3. 핵심: 벡터 간섭 모델 (Interference Physics)
+    # 두 신호가 Serpentine 경로를 거치며 특정 지점에서 만날 때의 수식
+    # Constructive (0,0): cos(0)+cos(0) = 2
+    # Destructive (0,1): cos(0)+cos(pi) = 0
+    
+    # Serpentine 경로에 의한 추가 위상 지연 (Path Length Difference)
+    path_diff_phase = 0.2 * np.pi 
+    
+    E_a = np.exp(1j * (phi_a))
+    E_b = np.exp(1j * (phi_b + path_diff_phase))
+    
+    # Interference & Intensity
+    E_total = E_a + E_b
+    intensity = np.abs(E_total)**2
+    
+    # 4. 시냅스 매핑 (Vout = tanh(Gain * Intensity))
+    # Gain을 조절하여 EPSP와 IPSP의 간격을 벌림
+    v_out = np.tanh(0.8 * intensity * ef_volts * 5.0)
+    
+    return v_out
+
+print(f"--- 🌟 GitHub Portfolio Final Data (Optimized) ---")
+results = []
+for inp in [(0,0), (0,1), (1,0), (1,1)]:
+    v = simulate_portfolio_ready_synapse(inp)
+    results.append(v)
+    status = "EPSP (Active)" if v > 0.6 else "IPSP (Suppressed)"
+    print(f"Input {inp}: Vout = {v:.4f} ({status})")
+
+print(f"\n[Final Metric] Contrast (00 vs 01): {abs(results[0]-results[1]):.4f}")
