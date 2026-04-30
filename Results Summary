@@ -1,0 +1,1 @@
+The simulation demonstrates a clear phase-dependent response. By modulating the input phase between $0$ and $\pi$, we achieved a synaptic weight contrast of ~28%, successfully differentiating between "Active" and "Suppressed" synaptic states.Input (A, B)Phase (ϕA​,ϕB​)Synaptic State(0, 0)(0, 0)Strong EPSP(0, 1)(0, $\pi$)Modulated IPSP
